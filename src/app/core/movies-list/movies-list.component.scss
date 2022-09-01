@@ -1,0 +1,49 @@
+h1{
+    font-size: xx-large;
+    text-align: center;
+    padding-top: 20px;
+}
+.search-bar{
+    width: 700px;
+}
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+.mat-card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+.card-background{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 30px;
+    background-image: url('../../../assets/images/BackGround.jpg');
+    background-size: cover;
+    opacity: 0.8;
+    width: 700px;
+}
+.card-title{
+    font-weight:bolder;
+}
+.details-button{
+
+}
+.buttons{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+    margin-top: 20px;
+}
+.button{
+    font-size: x-large;
+}

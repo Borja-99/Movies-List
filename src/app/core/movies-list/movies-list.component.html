@@ -1,0 +1,20 @@
+<h1>MOVIES LIST</h1>
+<div class="header">
+<mat-form-field class="search-bar" appearance="fill">
+    <mat-label style="padding-bottom: 2px;">Search Bar</mat-label>
+    <input type="text" id="inputText" style="resize: none;" matInput placeholder="title search"/>
+</mat-form-field>
+</div>
+<div class="buttons">
+<button mat-raised-button class="button" [disabled]="!PreviousEditMode" (click)="onPreviousButton()">Previous Page</button>
+<button mat-raised-button class="button" (click)="onSearch()">search</button>
+<button mat-raised-button class="button" [disabled]="!NextEditMode" (click)="onNextButton()">Next Page</button>
+</div>
+
+<div class="mat-card">
+<mat-card *ngFor="let movie of moviesListTitles;" class="card-background">
+      <mat-card-title class="card-title">{{movie.original_title}}</mat-card-title>
+    <button mat-raised-button class="details-button" (click)=" onDetail(movie.id)">Details</button>
+  </mat-card>
+</div> 
+
