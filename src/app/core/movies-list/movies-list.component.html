@@ -3,14 +3,15 @@
 <div class="header">
 <mat-form-field class="search-bar" appearance="fill">
     <mat-label style="padding-bottom: 2px;">Search Bar</mat-label>
-    <input type="text" id="inputText" style="resize: none;" matInput placeholder="title search"/>
+    <input type="text" id="inputText" matInput placeholder="TITLE SEARCH"/>
+    <mat-hint>Empty search bar and press search to reset results</mat-hint>
 </mat-form-field>
 </div>
 
 <div class="buttons">
-<button mat-raised-button class="button" [disabled]="!PreviousEditMode" (click)="onPreviousButton()">Previous Page</button>
-<button mat-raised-button class="button" (click)="onSearch()">search</button>
-<button mat-raised-button class="button" [disabled]="!NextEditMode" (click)="onNextButton()">Next Page</button>
+<button mat-icon-button class="button material-symbols-outlined" [disabled]="!PreviousEditMode" (click)="onPreviousButton()"><mat-icon style="font-weight: bolder;">navigate_before</mat-icon></button>
+<button mat-raised-button class="button" (click)="onSearch()"><mat-icon>search</mat-icon>search</button>
+<button mat-icon-button class="button material-symbols-outlined" [disabled]="!NextEditMode" (click)="onNextButton()"><mat-icon style="font-weight: bolder;">navigate_next</mat-icon></button>
 </div>
 
 <div class="mat-card">
