@@ -1,0 +1,53 @@
+h1{
+    font-size: xx-large;
+    text-align: center;
+    padding-top: 20px;
+}
+.container{
+    align-items: center;
+    justify-content: center;
+    display: flex
+}
+.mat-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 50%;
+    height: 50%;
+    margin-top: 50px;
+}
+.languages{
+    display: flex;
+    flex-direction: row;
+    vertical-align: bottom;
+    text-align: center;
+}
+h3{
+    display: flex;
+    flex-direction: row;
+    vertical-align: bottom;
+    text-align: center;
+    margin-top: 6px;
+    margin-left: 10px;
+}
+.title-group{
+    flex-direction: column;
+    text-align: left;
+    font: initial;
+}
+.content{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 20%;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top: 16px;
+}
+.back-button{
+    width: 80px;
+    height: 60px;
+    font-size: large;  
+}

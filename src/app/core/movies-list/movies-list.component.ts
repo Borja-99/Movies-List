@@ -1,4 +1,5 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { ThisReceiver } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MoviesConnexionService } from 'src/app/shared/movies-connexion.service';
 
@@ -17,10 +18,12 @@ export class MoviesListComponent implements OnInit {
     total_results: 0
   };
   moviesListTitles: any = [];
+  moviesListAux: any = [];
   page: number = 1;
   PreviousEditMode: boolean = false;
   NextEditMode: boolean = true;
-  @Output() movieId: number|undefined;
+  movieId: number | undefined;
+  query: string = '';
 
   constructor(private moviesConn: MoviesConnexionService, private route: Router) { }
 
@@ -29,53 +32,82 @@ export class MoviesListComponent implements OnInit {
   }
 
   showTitleMoviesList(): void {
-    this.moviesConn.getMovies(this.page).subscribe((data)=>{
+    this.moviesConn.getMovies(1).subscribe((data)=>{
       this.moviesObject = data;
-      this.moviesListTitles = this.moviesObject.results;
+      this.moviesListTitles = this.moviesListAux = this.moviesObject.results;
       this.page = this.moviesObject.page
     });
   }
 
   onSearch(): void {
-    let movieSearchList = [];
-    let input = document.getElementById('inputText')
-    
-    for(let i = 0; i < this.moviesListTitles.length; i++){
-      if(this.moviesListTitles[i].original_title.includes(input)){
-        movieSearchList.push(this.moviesListTitles[i]);
-      }
+    let input = (<HTMLInputElement>document.getElementById("inputText")).value;
+    this.query = input
+    if(input === ''){
+      this.page = 1;
+      this.moviesListTitles = this.moviesListAux;
+    }else{
+      this.moviesConn.searchMovies(input, 1).subscribe((data)=> {
+        this.moviesObject = data;
+        this.moviesListTitles = this.moviesObject.results;
+        this.page = this.moviesObject.page
+        console.log(this.moviesObject.total_pages);
+        if(this.moviesObject.total_pages <= 1 ){ this.NextEditMode = false; }
+      });
     }
-    this.moviesListTitles = movieSearchList;
+    this.NextEditMode = true;
+    this.PreviousEditMode = false;
   }
 
   onDetail(id:number): void {
     this.movieId = id;
-    this.route.navigate(['movie-details']);
+    this.route.navigate(['movie-details', this.movieId]);
   }
   
-  onNextButton(): void { // DataBase only allows to call first 500 pages of the total
-    if(this.page < 500 && this.page >= 1){ 
-      this.PreviousEditMode = true;
-      this.page = this.page + 1;
-      console.log(this.page);
-      this.moviesConn.getMovies(this.page).subscribe((data) =>{
-        this.moviesObject = data;
-        this.moviesListTitles = this.moviesObject.results;
-      });
-      if(this.page === 500){this.NextEditMode = false;} 
+  onNextButton(): void {
+    if(this.query === ''){
+      if(this.page < 1000 && this.page >= 1){ 
+        this.PreviousEditMode = true;
+        this.page = this.page + 1;
+        this.moviesConn.getMovies(this.page).subscribe((data) =>{
+          this.moviesObject = data;
+          this.moviesListTitles = this.moviesObject.results;
+        });
+        if(this.page === this.moviesObject.total_pages){this.NextEditMode = false;} 
+      }
+    }else{
+      if(this.page < this.moviesObject.total_pages && this.page >= 1){ 
+        this.PreviousEditMode = true;
+        this.page = this.page + 1;
+        this.moviesConn.searchMovies(this.query, this.page).subscribe((data) =>{
+          this.moviesObject = data;
+          this.moviesListTitles = this.moviesObject.results;
+        });
+        if(this.page === this.moviesObject.total_pages){this.NextEditMode = false;} 
+      }
     }
   }
 
   onPreviousButton(): void {
-    if(this.page > 1 && this.page <= 500){
-      this.NextEditMode = true;
-      this.page = this.page - 1 ;
-    this.moviesConn.getMovies(this.page).subscribe((data) =>{
-      this.moviesObject = data;
-      this.moviesListTitles = this.moviesObject.results;
-    });
-    if(this.page === 1){this.PreviousEditMode = false;}
+    if(this.query === ''){
+      if(this.page > 1 && this.page <= 1000){ 
+        this.NextEditMode = true;
+        this.page = this.page - 1;
+        this.moviesConn.getMovies(this.page).subscribe((data) =>{
+          this.moviesObject = data;
+          this.moviesListTitles = this.moviesObject.results;
+        });
+        if(this.page === 1){this.PreviousEditMode = false;} 
+      }
+    }else{
+      if(this.page <= this.moviesObject.total_pages && this.page >= 1){ 
+        this.NextEditMode = true;
+        this.page = this.page - 1;
+        this.moviesConn.searchMovies(this.query, this.page).subscribe((data) =>{
+          this.moviesObject = data;
+          this.moviesListTitles = this.moviesObject.results;
+        });
+        if(this.page === 1){this.PreviousEditMode = false;} 
+      }
     }
   }
 }
-

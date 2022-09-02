@@ -1,9 +1,10 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MoviesConnexionService } from './movies-connexion.service';
 import { MatInputModule } from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button'
+import { MovieDetailsRoutingModule } from '../core/movie-details/movie-details-routing.module';
 
 @NgModule({
   declarations: [],
@@ -12,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button'
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MovieDetailsRoutingModule,
   ],
   exports: [
     MatInputModule,
@@ -19,6 +21,5 @@ import { MatButtonModule } from '@angular/material/button'
   ],
   providers: [MoviesConnexionService],
   bootstrap: [],
-  // schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule {}

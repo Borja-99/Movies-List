@@ -1,1 +1,15 @@
-<p>movie-details works!</p>
+<h1>MOVIE DETAILS</h1>
+<div class="container">
+<mat-card class="mat-card">
+    <mat-card-title-group class="title-group">
+        <mat-card-title style="font-size: 50px;">{{movieDetailsObj.title}}</mat-card-title>
+        <mat-card-subtitle style="font-size: 30px;">{{movieDetailsObj.release_date}}</mat-card-subtitle>
+        <mat-card-subtitle class="languages" style="font-size: 30px;">Languages: <h3 class="h3" *ngFor="let lang of languages">{{lang.english_name}}</h3></mat-card-subtitle>
+        <mat-card-subtitle style="font-size: 20px; color: black;">{{movieDetailsObj.overview}}</mat-card-subtitle>
+        <button mat-icon-button class="back-button" (click)="backClick()">Back</button>
+    </mat-card-title-group>
+    <mat-card-content class="content">
+        <img mat-card-image runat="server" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{{movieDetailsObj.poster_path}}">
+    </mat-card-content>
+</mat-card>
+</div>
